@@ -479,7 +479,7 @@
             <li><span class="em">&#127968;</span><b>Neighbourhoods</b> &mdash; zoom into any metro (or pick a focus city) for income, density and ownership block by block.</li>
             <li><span class="em">&#127760;</span><b>GTA Cities</b> &mdash; Greater Toronto municipalities by income, diversity and more.</li>
           </ul>
-          <p style="margin-bottom:14px">The <b>&ldquo;Now showing&rdquo;</b> line under the tabs always says, in plain words, what the colours mean. Brighter pink = higher, dark blue = lower.</p>
+          <p style="margin-bottom:14px">The <b>&ldquo;Now showing&rdquo;</b> line under the tabs always says, in plain words, what the colours mean. Brighter green = better, deeper red = worse.</p>
           <button class="go" id="welcomeGo">Start exploring</button>
         </div>
       </div>
@@ -1038,7 +1038,7 @@ const _muniCache={};
 function muniSub(k){if(_muniCache[k])return _muniCache[k];const lyr=L.geoJSON({type:'FeatureCollection',features:MUNI_BY_CMA[k]},{renderer:glRenderer,style:muniStyle,onEachFeature:(f,l)=>{l.bindTooltip(()=>muniTip(f),{sticky:true,direction:'top',className:'ntip',opacity:1});l.on('mouseover',()=>l.setStyle(muniHL(f)));l.on('mouseout',()=>l.setStyle(muniStyle(f)));}});_muniCache[k]=lyr;return lyr;}
 const municipalLayer=L.featureGroup();
 let _gtaKey=null;
-function gtaLegend(show){if(!_gtaKey){_gtaKey=document.createElement('div');_gtaKey.id='gtaKey';_gtaKey.className='tkey';_gtaKey.addEventListener('click',function(ev){if(ev.target.closest('.lt'))_gtaKey.classList.toggle('collapsed');});_gtaKey.style.cssText='position:absolute;left:12px;bottom:12px;top:auto;z-index:500;display:none';_gtaKey.innerHTML='<div class="lt" style="margin-bottom:6px">Greater Toronto Area &mdash; regions<span class="legchev">\u25be</span></div>'+Object.keys(REGION_COLOR).map(r=>'<div class="gtarow" style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);padding:1px 0"><span style="width:11px;height:11px;border-radius:2px;background:'+REGION_COLOR[r]+';display:inline-block"></span>'+r+'</div>').join('');const mw=document.querySelector('.mapwrap');if(mw)mw.appendChild(_gtaKey);}_gtaKey.style.display=show?'':'none';}
+function gtaLegend(show){if(!_gtaKey){_gtaKey=document.createElement('div');_gtaKey.id='gtaKey';_gtaKey.className='tkey';_gtaKey.addEventListener('click',function(ev){if(ev.target.closest('.lt'))_gtaKey.classList.toggle('collapsed');});_gtaKey.style.cssText='position:absolute;left:12px;top:92px;bottom:auto;z-index:500;display:none';_gtaKey.innerHTML='<div class="lt" style="margin-bottom:6px">Greater Toronto Area &mdash; regions<span class="legchev">\u25be</span></div>'+Object.keys(REGION_COLOR).map(r=>'<div class="gtarow" style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);padding:1px 0"><span style="width:11px;height:11px;border-radius:2px;background:'+REGION_COLOR[r]+';display:inline-block"></span>'+r+'</div>').join('');const mw=document.querySelector('.mapwrap');if(mw)mw.appendChild(_gtaKey);}_gtaKey.style.display=show?'':'none';}
 function syncMuni(){if(!map.hasLayer(municipalLayer)){gtaLegend(false);return;}const vb=map.getBounds();for(const k in MUNI_BOUNDS){const inv=vb.intersects(MUNI_BOUNDS[k]);const has=_muniCache[k]&&municipalLayer.hasLayer(_muniCache[k]);if(inv&&!has)municipalLayer.addLayer(muniSub(k));else if(!inv&&has)municipalLayer.removeLayer(_muniCache[k]);}municipalLayer.bringToBack();provLayer.bringToBack();gtaLegend(!demoOn&&MUNI_BOUNDS['Toronto']&&vb.intersects(MUNI_BOUNDS['Toronto']));}
 function muniRestyle(){for(const k in _muniCache){if(municipalLayer.hasLayer(_muniCache[k]))_muniCache[k].setStyle(muniStyle);}}
 const CITYCENTERS={toronto:[43.70,-79.40],calgary:[51.05,-114.07],vancouver:[49.25,-123.10],edmonton:[53.54,-113.49],ottawa:[45.42,-75.70],montreal:[45.55,-73.62]};
@@ -1452,4 +1452,4 @@ function renderNotesList(){var el=document.getElementById('notesList');if(!el)re
 })();
 </script>
 </body>
-</html>
+</html
